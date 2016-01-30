@@ -8,8 +8,7 @@ var express     = require('express'),
 // HTML
 var jade        = require('jade');
 
-// DATABASE
-var db = require('./db.js');
+var generator   = require('./generator');
 
 // EXPRESS
 // CONFIGURATION
@@ -22,12 +21,17 @@ app.engine('jade', require('jade').__express);
 // Static files
 app.use('/', express.static(__dirname + '/library/built', { maxAge: 86400 }));
 // Homepage
+
 app.get('/', function(req, res) { res.render('index'); });
 
 io.sockets.on('connection', function(socket) {
 
-    var contact = jade.compileFile('./templates/contact.jade');
-    socket.emit('content', contact());
+    socket.on('getContent', function(data) {
+        var pageContent = generator.getJSON(data, function(JSON) {
+            var newPage = jade.compileFile('./templates/page.jade');
+            socket.emit('content', newPage(JSON));
+        });
+    });
 
 });
 
