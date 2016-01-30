@@ -1,5 +1,6 @@
 var socket = io.connect();
 
-socket.on('ready', function() {
-    console.log('Socket.io connected');
+socket.on('content', function(data) {
+    console.log(data);
+    $('body').append(data);
 });

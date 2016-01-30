@@ -31,7 +31,7 @@ var chemins = {
     jsFront: 'library/src/javascripts/**/*.js',
     jsDest: 'library/built/js/',
     cssSrc: 'library/src/**/*.scss',
-    cssDest: 'library/built/css/',
+    cssDest: 'library/built/',
     imagesSrc: 'library/src/images/**/*',
     imagesDest: 'library/built/img/'
 };

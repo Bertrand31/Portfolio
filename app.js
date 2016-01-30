@@ -5,6 +5,9 @@ var express     = require('express'),
     io          = require('socket.io')(http),
     compression = require('compression');
 
+// HTML
+var jade        = require('jade');
+
 // DATABASE
 var db = require('./db.js');
 
@@ -18,14 +21,14 @@ app.engine('jade', require('jade').__express);
 // ROUTES
 // Static files
 app.use('/', express.static(__dirname + '/library/built', { maxAge: 86400 }));
-// Survey and counter
+// Homepage
 app.get('/', function(req, res) { res.render('index'); });
 
 io.sockets.on('connection', function(socket) {
 
-    socket.emit('ready', function() {
-        console.log('coucou emitted');
-    });
+    var contact = jade.compileFile('./templates/contact.jade');
+    socket.emit('content', contact());
+
 });
 
 http.listen(8080);
