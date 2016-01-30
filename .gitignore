@@ -1,0 +1,14 @@
+*.scssc
+*.sassc
+*.map
+
+##########
+## Misc ##
+##########
+
+#Dépendances + Gulp output
+node_modules/
+library/built/
+
+#SASS Cache
+.sass-cache
