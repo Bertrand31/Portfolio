@@ -1,11 +1,16 @@
 var socket = io.connect();
 
+function changePage(target) {
+    socket.emit('getContent', target);
+    var state = { 'title': target };
+    window.history.pushState(state, target, '/' + target);
+}
+
 $('.get-content').click(function(e) {
     e.preventDefault();
-    socket.emit('getContent', $(this).attr('data-target'));
+    changePage($(this).attr('data-target'));
 });
 
 socket.on('content', function(data) {
-    console.log(data);
-    $('body').append(data);
+    $('#main').html(data);
 });
