@@ -1,6 +1,18 @@
-include ./includes/head.jade
+doctype html
+html
+    include ./includes/head.jade
+    body
+        h1 Welcome on my portfolio
+        nav
+            ul
+                li
+                    a.get-content(href="/", data-target="") Accueil
+                li
+                    a.get-content(href="/page/sass", data-target="sass") Voir la page SASS
+                li
+                    a.get-content(href="/page/nodejs", data-target="nodejs") Voir la page NodeJS
+        main#main
+            h2 #{title}
+            p #{content}
 
-    main#main
-        h2 #{title}
-        p #{content}
-    include ./includes/footer.jade
+        include ./includes/footer.jade
