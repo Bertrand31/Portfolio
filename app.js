@@ -40,6 +40,8 @@ app.get('/:name', function(req, res) {
 io.sockets.on('connection', function(socket) {
 
     socket.on('getContent', function(target) {
+        // If 'target' is send blank, we send the homepage
+        target = target ? target : 'home';
         var subContent = generator.getJSON(target, function(JSON) {
             socket.emit('content', content(JSON));
         });
