@@ -24,15 +24,10 @@ var page    = jade.compileFile('./templates/page.jade'),
 // ROUTES
 // Static files
 app.use('/', express.static(__dirname + '/library/built', { maxAge: 86400 }));
-// Homepage
-app.get('/', function(req, res) {
-    var pageContent = generator.getJSON('home', function(JSON) {
-        res.send(page(JSON));
-    });
-});
 // Pages
-app.get('/:name', function(req, res) {
-    var pageContent = generator.getJSON(req.params.name, function(JSON) {
+app.get('/:name*?', function(req, res) {
+    var target = req.params.name || 'home';
+    generator.getJSON(target, function(JSON) {
         res.send(page(JSON));
     });
 });
