@@ -1,6 +1,7 @@
 *.scssc
 *.sassc
 *.map
+*.swp
 
 ##########
 ## Misc ##
