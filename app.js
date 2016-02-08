@@ -23,9 +23,15 @@ var page    = jade.compileFile('./templates/page.jade'),
 
 // ROUTES
 // Static files
-app.use('/', express.static(__dirname + '/library/built', { maxAge: 86400 }));
+app.use(express.static(__dirname + '/library/built', { maxAge: 86400 }));
 // Pages
-app.get('/:name*?', function(req, res) {
+app.get('/', function(req, res) {
+    var target = 'home';
+    generator.getJSON(target, function(JSON) {
+        res.send(page(JSON));
+    });
+});
+app.get('/page/:name*?', function(req, res) {
     var target = req.params.name || 'home';
     generator.getJSON(target, function(JSON) {
         res.send(page(JSON));
@@ -35,7 +41,7 @@ app.get('/:name*?', function(req, res) {
 io.sockets.on('connection', function(socket) {
 
     socket.on('getContent', function(target) {
-        // If 'target' is send blank, we send the homepage
+        // If 'target' is sent blank, we send the homepage
         target = target ? target : 'home';
         var subContent = generator.getJSON(target, function(JSON) {
             socket.emit('content', content(JSON));
