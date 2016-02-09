@@ -32,10 +32,14 @@ app.get('/', function(req, res) {
     });
 });
 app.get('/page/:name*?', function(req, res) {
-    var target = req.params.name || 'home';
+    var target = req.params.name;
     generator.getJSON(target, function(JSON) {
         res.send(page(JSON));
     });
+});
+// 404
+app.use(function(req, res, next) {
+      res.status(404).render('404');
 });
 
 io.sockets.on('connection', function(socket) {
